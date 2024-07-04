@@ -18,7 +18,10 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime criadoEm;
+
     private String nomeCompleto;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
