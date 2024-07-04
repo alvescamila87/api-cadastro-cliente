@@ -19,12 +19,12 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<List<Cliente>> listAllCustomers(){
-        List<Cliente> listCustomer = clienteRepository.findAll();
+        List<Cliente> customersList = clienteRepository.findAll();
 
-        if(listCustomer.isEmpty()){
+        if(customersList.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(listCustomer);
+        return ResponseEntity.ok(customersList);
     }
 
     @GetMapping("/{idCustomer}")
