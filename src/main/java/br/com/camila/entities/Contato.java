@@ -1,5 +1,6 @@
 package br.com.camila.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class Contato {
     private String nomeCompleto;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
+    @JsonBackReference
     private Cliente cliente;
 
     @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,6 +48,46 @@ public class Contato {
         this.nomeCompleto = nomeCompleto;
         this.cliente = cliente;
         this.emails = emails;
+        this.telefones = telefones;
+    }
+
+    public Long getIdContato() {
+        return idContato;
+    }
+
+    public void setIdContato(Long idContato) {
+        this.idContato = idContato;
+    }
+
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Email> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<Email> emails) {
+        this.emails = emails;
+    }
+
+    public List<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<Telefone> telefones) {
         this.telefones = telefones;
     }
 

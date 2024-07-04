@@ -1,5 +1,6 @@
 package br.com.camila.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -18,11 +19,11 @@ public class Email {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "contato_id")
+    @JoinColumn(name = "idContato", referencedColumnName = "idContato")
     private Contato contato;
 
     public Email() {
