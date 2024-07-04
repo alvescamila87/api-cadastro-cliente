@@ -125,6 +125,15 @@ public class Cliente {
     }
 
     /**
+     * Método para gerar a data de criação ("yyyy-mm-dd hh:mm:ss")
+     * do registro de cliente automaticamente.
+     */
+    @PrePersist
+    protected void geraDataCriacaoAutomatica() {
+        criadoEm = LocalDateTime.now();
+    }
+
+    /**
      * Retorna a representação em String do objeto Cliente.
      *
      * @return Uma String contendo os atributos do Cliente.
