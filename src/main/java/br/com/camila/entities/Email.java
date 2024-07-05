@@ -1,7 +1,5 @@
 package br.com.camila.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -48,7 +46,6 @@ public class Email {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     @Override
     public boolean equals(Object o) {
