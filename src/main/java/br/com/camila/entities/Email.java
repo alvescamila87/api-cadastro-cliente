@@ -1,5 +1,7 @@
 package br.com.camila.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -17,14 +19,6 @@ public class Email {
 
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "idContato", referencedColumnName = "idContato")
-    private Contato contato;
-
     public Email() {
     }
 
@@ -33,14 +27,10 @@ public class Email {
      *
      * @param idEmail O ID do e-mail.
      * @param email   O endereço de e-mail.
-     * @param cliente O cliente associado ao e-mail.
-     * @param contato O contato associado ao e-mail.
      */
-    public Email(Long idEmail, String email, Cliente cliente, Contato contato) {
+    public Email(Long idEmail, String email) {
         this.idEmail = idEmail;
         this.email = email;
-        this.cliente = cliente;
-        this.contato = contato;
     }
 
     public Long getIdEmail() {
@@ -59,21 +49,6 @@ public class Email {
         this.email = email;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Contato getContato() {
-        return contato;
-    }
-
-    public void setContato(Contato contato) {
-        this.contato = contato;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -81,15 +56,13 @@ public class Email {
         if (o == null || getClass() != o.getClass()) return false;
 
         Email email1 = (Email) o;
-        return idEmail.equals(email1.idEmail) && Objects.equals(email, email1.email) && Objects.equals(cliente, email1.cliente) && Objects.equals(contato, email1.contato);
+        return idEmail.equals(email1.idEmail) && Objects.equals(email, email1.email);
     }
 
     @Override
     public int hashCode() {
         int result = idEmail.hashCode();
         result = 31 * result + Objects.hashCode(email);
-        result = 31 * result + Objects.hashCode(cliente);
-        result = 31 * result + Objects.hashCode(contato);
         return result;
     }
 
@@ -103,8 +76,6 @@ public class Email {
         return "EMAIL [" +
                 "ID E-mail:" + idEmail +
                 ", E-mail: " + email +
-                ", Cliente: " + cliente +
-                ", Contato: " + contato +
-                '}';
+                ']';
     }
 }

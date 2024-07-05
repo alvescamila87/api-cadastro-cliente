@@ -2,7 +2,7 @@ package br.com.camila.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,18 +19,24 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime criadoEm;
+    @Temporal(TemporalType.DATE)
+    private LocalDate criadoEm;
 
     private String nomeCompleto;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contato> contatos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "cliente_emails", joinColumns = @JoinColumn(name = "id_cliente")
+    )
     private List<Email> emails = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "cliente_telefones", joinColumns = @JoinColumn(name = "id_cliente")
+    )
     private List<Telefone> telefones = new ArrayList<>();
 
     public Cliente() {
@@ -47,7 +53,7 @@ public class Cliente {
      * @param emails       Lista de e-mails associados ao cliente.
      * @param telefones    Lista de telefones associados ao cliente.
      */
-    public Cliente(Long idCliente, LocalDateTime criadoEm, String nomeCompleto, List<Contato> contatos, List<Email> emails, List<Telefone> telefones) {
+    public Cliente(Long idCliente, LocalDate criadoEm, String nomeCompleto, List<Contato> contatos, List<Email> emails, List<Telefone> telefones) {
         this.idCliente = idCliente;
         this.criadoEm = criadoEm;
         this.nomeCompleto = nomeCompleto;
@@ -64,11 +70,11 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public LocalDateTime getCriadoEm() {
+    public LocalDate getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm) {
+    public void setCriadoEm(LocalDate criadoEm) {
         this.criadoEm = criadoEm;
     }
 
@@ -125,12 +131,12 @@ public class Cliente {
     }
 
     /**
-     * Método para gerar a data de criação ("yyyy-mm-dd hh:mm:ss")
+     * Método para gerar a data de criação ("yyyy-mm-dd")
      * do registro de cliente automaticamente.
      */
     @PrePersist
     protected void geraDataCriacaoAutomatica() {
-        criadoEm = LocalDateTime.now();
+        criadoEm = LocalDate.now();
     }
 
     /**

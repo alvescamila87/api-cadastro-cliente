@@ -17,14 +17,6 @@ public class Telefone {
 
     private String telefone;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "contato_id")
-    private Contato contato;
-
     public Telefone() {
     }
 
@@ -33,14 +25,10 @@ public class Telefone {
      *
      * @param idTelefone O ID do telefone.
      * @param telefone   O número de telefone.
-     * @param cliente    O cliente associado ao telefone.
-     * @param contato    O contato associado ao telefone.
      */
-    public Telefone(Long idTelefone, String telefone, Cliente cliente, Contato contato) {
+    public Telefone(Long idTelefone, String telefone) {
         this.idTelefone = idTelefone;
         this.telefone = telefone;
-        this.cliente = cliente;
-        this.contato = contato;
     }
 
     public Long getIdTelefone() {
@@ -59,37 +47,19 @@ public class Telefone {
         this.telefone = telefone;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Contato getContato() {
-        return contato;
-    }
-
-    public void setContato(Contato contato) {
-        this.contato = contato;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Telefone telefone1 = (Telefone) o;
-        return idTelefone.equals(telefone1.idTelefone) && Objects.equals(telefone, telefone1.telefone) && Objects.equals(cliente, telefone1.cliente) && Objects.equals(contato, telefone1.contato);
+        return idTelefone.equals(telefone1.idTelefone) && Objects.equals(telefone, telefone1.telefone);
     }
 
     @Override
     public int hashCode() {
         int result = idTelefone.hashCode();
         result = 31 * result + Objects.hashCode(telefone);
-        result = 31 * result + Objects.hashCode(cliente);
-        result = 31 * result + Objects.hashCode(contato);
         return result;
     }
 
@@ -103,8 +73,6 @@ public class Telefone {
         return "TELEFONE [" +
                 "ID Telefone: " + idTelefone +
                 ", Telefone: " + telefone +
-                ", Cliente: " + cliente +
-                ", Contato: " + contato +
                 ']';
     }
 }

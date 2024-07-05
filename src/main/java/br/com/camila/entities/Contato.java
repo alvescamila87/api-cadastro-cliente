@@ -25,10 +25,16 @@ public class Contato {
     @JsonBackReference
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "contato_emails", joinColumns = @JoinColumn(name = "id_contato")
+    )
     private List<Email> emails = new ArrayList<>();
 
-    @OneToMany(mappedBy = "contato", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "contato_telefones", joinColumns = @JoinColumn(name = "id_contato")
+    )
     private List<Telefone> telefones = new ArrayList<>();
 
     public Contato() {
