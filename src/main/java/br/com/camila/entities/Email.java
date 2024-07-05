@@ -1,6 +1,8 @@
 package br.com.camila.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.EqualsAndHashCode.Include;
 
 import java.util.Objects;
 
@@ -9,59 +11,19 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "emails")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Email {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Include
     private Long idEmail;
 
     private String email;
-
-    public Email() {
-    }
-
-    /**
-     * Construtor completo para inicializar todos os atributos do Email.
-     *
-     * @param idEmail O ID do e-mail.
-     * @param email   O endereço de e-mail.
-     */
-    public Email(Long idEmail, String email) {
-        this.idEmail = idEmail;
-        this.email = email;
-    }
-
-    public Long getIdEmail() {
-        return idEmail;
-    }
-
-    public void setIdEmail(Long idEmail) {
-        this.idEmail = idEmail;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Email email1 = (Email) o;
-        return idEmail.equals(email1.idEmail) && Objects.equals(email, email1.email);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idEmail.hashCode();
-        result = 31 * result + Objects.hashCode(email);
-        return result;
-    }
 
     /**
      * Retorna a representação em String do objeto Email.
