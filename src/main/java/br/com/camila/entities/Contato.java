@@ -57,7 +57,6 @@ public class Contato {
         return "CONTATO [" +
                 "ID Contato: " + idContato +
                 ", Nome completo: " + nomeCompleto +
-                ", Cliente: " + cliente +
                 ", E-mails: " + emails +
                 ", Telefones: " + telefones +
                 ']';
