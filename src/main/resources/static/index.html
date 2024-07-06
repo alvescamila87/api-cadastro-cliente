@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Customer system</title>
+</head>
+<body>
+    <header>
+        <h1>Sistema de cadastro de clientes</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="showSection('form-cliente-list'); listarClientes();">Listar clientes</a>
+        <a href="#" onclick="showSection('form-cliente-add')">Adicionar cliente</a>
+    </nav>
+    
+    <!-- Seção adicionar cliente -->
+    <section id="form-cliente-add" class="section-group">
+        <h3>Cadastrar cliente</h3>
+        <form>
+            <label for="nome_cliente">Nome completo</label>
+            <input type="text" id="nome_cliente" name="nome_cliente" required><br><br>        
+        
+            <div class="form-group" id="divEmails">
+                <label for="email_cliente">E-mail:</label>
+                <input type="email" class="emailInput" name="email_cliente" placeholder="nome@email.com">
+                <button type="button" onclick="adicionarCampoEmail()">Adicionar campo de e-mail</button>
+            </div>
+            <div class="form-group" id="divTelefones">
+                <label for="telefone_cliente">Telefone:</label>
+                <input type="telefone" class="telefoneInput" name="telefone_cliente" placeholder="(00) XXXXX-XXXX">
+                <button type="button" onclick="adicionarCampoTelefone()">Adicionar campo de telefone</button>
+            </div>            
+
+            <button type="button" onclick="adicionarCliente()">Salvar</button>
+            <button type="button" onclick="limparFormulario()">Limpar</button>
+        </form>
+    </section>
+
+    <!-- Seção listar cliente -->
+    <section id="form-cliente-list"  class="section-group">
+        <!-- Seção pesquisar cliente por ID -->
+       <h3>Pesquisar cliente por ID</h3>
+       <form >
+           <input type="text" id="id_cliente" name="id_cliente" placeholder="Digite o ID do cliente"><br><br>
+           <button type="button" onclick="pesquisarCliente()">Pesquisar</button>
+           <button type="button" onclick="limparPesquisa()">Limpar pesquisa</button>
+       </form>
+       <h3>Lista de Clientes</h3>
+       <table >
+           <thead>
+               <tr>
+                   <th>ID</th>
+                   <th>Criado em</th>
+                   <th>Nome completo</th>
+                   <th>Ações</th>
+               </tr>
+           </thead>
+           <tbody id="form-cliente-list-tuples">
+               <!-- Clientes serão listados aqui -->
+           </tbody>
+       </table>
+   </section>  
+   <footer>
+    <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
+</footer>  
+</body>
+<script src="js/script.js"></script>
+</html>
