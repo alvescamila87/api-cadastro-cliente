@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"br.com.camila"},{"l":"br.com.camila.controllers"},{"l":"br.com.camila.entities"},{"l":"br.com.camila.repositories"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"br.com.camila"},{"l":"br.com.camila.controllers"},{"l":"br.com.camila.entities"},{"l":"br.com.camila.repositories"},{"l":"br.com.camila.utils"}];updateSearchResults();
