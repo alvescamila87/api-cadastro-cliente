@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>Sistema de cadastro de clientes</h1>
+        <h1>Customers HUB</h1>
     </header>
     <nav>
         <a href="#" onclick="showSection('form-cliente-list'); listarClientes();">Listar clientes</a>
@@ -24,12 +24,12 @@
         
             <div class="form-group" id="divEmails">
                 <label for="email_cliente">E-mail:</label>
-                <input type="email" class="emailInput" name="email_cliente" placeholder="nome@email.com">
+                <input type="email" class="emailInput" name="email_cliente" placeholder="nome@email.com" required>
                 <button type="button" onclick="adicionarCampoEmail()">Adicionar campo de e-mail</button>
             </div>
             <div class="form-group" id="divTelefones">
                 <label for="telefone_cliente">Telefone:</label>
-                <input type="telefone" class="telefoneInput" name="telefone_cliente" placeholder="(00) XXXXX-XXXX">
+                <input type="tel" class="telefoneInput" name="telefone_cliente" placeholder="(00) XXXXX-XXXX" required>
                 <button type="button" onclick="adicionarCampoTelefone()">Adicionar campo de telefone</button>
             </div>            
 
@@ -41,30 +41,95 @@
     <!-- Seção listar cliente -->
     <section id="form-cliente-list"  class="section-group">
         <!-- Seção pesquisar cliente por ID -->
-       <h3>Pesquisar cliente por ID</h3>
-       <form >
+        <h3>Pesquisar cliente por ID</h3>
+        <form >
            <input type="text" id="id_cliente" name="id_cliente" placeholder="Digite o ID do cliente"><br><br>
            <button type="button" onclick="pesquisarCliente()">Pesquisar</button>
-           <button type="button" onclick="limparPesquisa()">Limpar pesquisa</button>
-       </form>
-       <h3>Lista de Clientes</h3>
-       <table >
-           <thead>
+           <button type="button" onclick="limparPesquisaCliente()">Limpar pesquisa</button>
+        </form>
+        <h3>Lista de Clientes</h3>
+        <table >
+            <thead>
                <tr>
                    <th>ID</th>
                    <th>Criado em</th>
                    <th>Nome completo</th>
                    <th>Ações</th>
                </tr>
-           </thead>
-           <tbody id="form-cliente-list-tuples">
+            </thead>
+            <tbody id="form-cliente-list-tuples">
                <!-- Clientes serão listados aqui -->
-           </tbody>
-       </table>
-   </section>  
-   <footer>
-    <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
-</footer>  
+            </tbody>
+        </table>
+    </section>  
+
+   <!-- Seção detalhes cliente por ID -->
+    <section id="form-cliente-modal-detalhes" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalDetalhes()">&times;</span>
+            <div id="modal-content-cliente" class="cliente-info">
+                <h4>Informações do Cliente</h4>
+                <p><strong>ID:</strong> <span id="form-cliente-id"></span></p>
+                <p><strong>Nome completo:</strong> <span id="form-cliente-nome"></span></p>
+                <p><strong>Criado em:</strong> <span id="form-cliente-criado-em"></span></p>
+            </div>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>E-mails do cliente</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-emails">
+                    <!-- E-mails do cliente serão listados aqui -->
+                </tbody>
+            </table>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Telefones do cliente</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-telefones">
+                    <!-- Telefones do cliente serão listados aqui -->
+                </tbody>
+            </table>
+          </div>
+    </section>
+
+    <!-- Seção edição cliente por ID -->
+    <section id="form-cliente-modal-edicao" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalEdicao()">&times;</span>
+            <h3>Editar Cliente</h3>
+            <form>
+                <input type="hidden" id="form-cliente-id-edit">
+                <label for="form-cliente-nome-edit">Nome completo:</label>
+                <input type="text" id="form-cliente-nome-edit">
+
+                <h4>E-mails:</h4>
+                <div id="form-cliente-emails-edit">
+                    <!-- Inputs de e-mail serão listados aqui -->
+                </div>
+        
+                <button onclick="adicionarCampoEmailEdicao()">Adicionar E-mail</button>
+        
+                <h4>Telefones:</h4>
+                <div id="form-cliente-telefones-edit">
+                    <!-- Inputs de telefone serão listados aqui -->
+                </div>
+        
+                <button onclick="adicionarCampoTelefoneEdicao()">Adicionar Telefone</button>
+                <button onclick="salvarEdicaoCliente()">Salvar</button>
+            </form>        
+        </div>
+    </section>
+    
+
+    <footer>
+        <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
+    </footer>  
 </body>
 <script src="js/script.js"></script>
 </html>

@@ -1,4 +1,14 @@
-@media (max-width: 992px) {}
+/* Estilos responsivos */
+@media (max-width: 992px) {
+    nav {
+        flex-wrap: wrap;
+    }
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+}
 
 /* Reset básico para remover margens e paddings padrões */
 * {
@@ -117,7 +127,7 @@ footer p {
         margin: 0; 
 }
 
-/* Estilo para a modal */
+/* Estilo para a modal  */
 .section-group {
     padding: 20px;
     background: #fff;
@@ -127,7 +137,7 @@ footer p {
 }
 
 .section-group-modal {
-    display: none;
+    display: none; 
     position: fixed;
     z-index: 1;
     left: 0;
@@ -160,6 +170,36 @@ footer p {
     cursor: pointer;
 }
 
+/* Estilo para os detalhes do cliente */
+.cliente-info {
+    background-color: lightgray; /* Fundo cinza claro */
+    padding: 10px;
+    border: 1px solid #aaa7a7; /* Borda cinza */
+    /* border-radius: 5px; */
+    margin-bottom: 15px;
+}
+
+/* Estilo para tabelas de e-mails e telefones */
+.cliente-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.cliente-table th, .cliente-table td {
+    border: 1px solid #ddd; /* Borda cinza */
+    padding: 8px;
+    text-align: left;
+}
+
+.cliente-table th {
+    background-color: lightgray; /* Fundo cinza claro para cabeçalho */
+}
+
+.cliente-table tbody tr:hover {
+    background-color: #f2f2f2; /* Fundo cinza claro ao passar o mouse */
+}
+
 /* Estilos específicos para os botões da modal */
 .btn-detalhes {
     background: #bfc2c4; 
@@ -175,7 +215,7 @@ footer p {
     background: #a4a6a8;
 }
 
-.btn-editar {
+.btn-editar, .btn-editar-email, .btn-editar-telefone {
     background: #3498db; 
     color: #fff;
     padding: 15px;     
@@ -185,11 +225,11 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-editar:hover {
+.btn-editar:hover, .btn-editar-email:hover, .btn-editar-telefone:hover {
     background: #2980b9;
 }
 
-.btn-excluir {
+.btn-excluir,.btn-excluir-email, .btn-excluir-telefone {
     background: #f44336; 
     color: #fff;
     padding: 15px; 
@@ -198,7 +238,7 @@ footer p {
     cursor: pointer;
 }
 
-.btn-excluir:hover {
+.btn-excluir:hover, .btn-excluir-email:hover, .btn-excluir-telefone:hover {
     background: #da190b;
 }
 
@@ -212,4 +252,3 @@ footer p {
     border-radius: 5px;
 }
 
-/* Estilos div botões de e-mails e telefones */
