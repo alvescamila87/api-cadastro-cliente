@@ -226,8 +226,10 @@ footer p {
 }
 
 .btn-editar:hover, .btn-editar-email:hover, .btn-editar-telefone:hover {
+    
     background: #2980b9;
 }
+
 
 .btn-excluir,.btn-excluir-email, .btn-excluir-telefone {
     background: #f44336; 
@@ -240,6 +242,19 @@ footer p {
 
 .btn-excluir:hover, .btn-excluir-email:hover, .btn-excluir-telefone:hover {
     background: #da190b;
+}
+
+.btn-novo-telefone, .btn-novo-email, .btn-add-contato {
+    background: #11c03d; 
+    color: #fff;
+    padding: 15px; 
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-novo-telefone:hover, .btn-novo-email:hover, .btn-add-contato:hover {
+    background: #0c922e; 
 }
 
 /* Estilos para as seções: de pesquisa por ID e adicionar cliente, contato */

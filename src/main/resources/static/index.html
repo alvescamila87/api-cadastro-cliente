@@ -78,6 +78,7 @@
                     <tr>
                         <th>ID</th>
                         <th>E-mails do cliente</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="form-cliente-emails">
@@ -89,6 +90,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Telefones do cliente</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="form-cliente-telefones">
@@ -105,28 +107,48 @@
             <h3>Editar Cliente</h3>
             <form>
                 <input type="hidden" id="form-cliente-id-edit">
-                <label for="form-cliente-nome-edit">Nome completo:</label>
+                <label for="form-cliente-nome-edit">Novo nome completo:</label>
                 <input type="text" id="form-cliente-nome-edit">
-
-                <h4>E-mails:</h4>
-                <div id="form-cliente-emails-edit">
-                    <!-- Inputs de e-mail serão listados aqui -->
-                </div>
-        
-                <button onclick="adicionarCampoEmailEdicao()">Adicionar E-mail</button>
-        
-                <h4>Telefones:</h4>
-                <div id="form-cliente-telefones-edit">
-                    <!-- Inputs de telefone serão listados aqui -->
-                </div>
-        
-                <button onclick="adicionarCampoTelefoneEdicao()">Adicionar Telefone</button>
-                <button onclick="salvarEdicaoCliente()">Salvar</button>
+                <button type="button" onclick="salvarEdicaoCliente()">Salvar</button>
             </form>        
         </div>
     </section>
-    
 
+    <!-- Seção adicionar email do cliente por ID -->
+    <section id="form-cliente-modal-add-emails" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalAddEmail()">&times;</span>
+            <h3>Adicionar e-mail de cliente</h3>
+            <form>
+                <input type="hidden" id="form-cliente-id-edit">
+                <label for="form-cliente-email-add">Novo e-mail:</label>
+                <input type="email" id="form-cliente-email-add">
+                <button type="button" onclick="salvarNovoEmailCliente()">Salvar</button>
+            </form>          
+        </div>
+    </section>
+
+    <!-- Seção edição de email do cliente por ID -->
+    <section id="form-cliente-modal-edicao-emails" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalEdicao()">&times;</span>
+            <h3>Editar Cliente</h3>
+            <form>
+                <table class="cliente-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>E-mails do cliente</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="form-cliente-emails">
+                        <p>TESTE E-MAILS</p>
+                        <!-- E-mails do cliente serão listados aqui -->
+                    </tbody>
+            </form>        
+        </div>
+    </section>    
     <footer>
         <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
     </footer>  

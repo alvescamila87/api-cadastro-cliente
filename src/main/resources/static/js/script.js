@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /****************************************************/
-/******************* CLEINTES ***********************/
+/******************* CLIENTES ***********************/
 /****************************************************/
 
 /**
@@ -111,6 +111,7 @@ function listarClientes() {
                     <button class="btn-detalhes" onclick="abrirModalDetalhesCliente(${cliente.idCliente})">Detalhes</button>
                     <button class="btn-editar" onclick="abrirModalEdicaoCliente(${cliente.idCliente})">Editar</button>
                     <button class="btn-excluir" onclick="excluirCliente(${cliente.idCliente})">Excluir</button>
+                    <button class="btn-add-contato" onclick="adicionarContatoAoCliente(${cliente.idCliente})">Adicionar contato</button>
                 </td>
             `;
                 listaClientes.appendChild(row);
@@ -228,10 +229,10 @@ function removerCampoTelefone(botaoRemoverTelefone) {
 }
 
 
-// Função para abrir a modal de EDIÇÃO do cliente
+// Função para abrir a modal de EDIÇÃO de nome do cliente
 function abrirModalEdicaoCliente(idCliente) {
-    const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
     const modalEdicao = document.getElementById('form-cliente-modal-edicao');
+    const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
   
     // Fazer requisição para obter os detalhes do cliente
     fetch(`${urlAPIClientes}/${idCliente}`)
@@ -245,38 +246,188 @@ function abrirModalEdicaoCliente(idCliente) {
         // Preencher os dados na modal de edição
         document.getElementById('form-cliente-id-edit').value = data.idCliente;
         document.getElementById('form-cliente-nome-edit').value = data.nomeCompleto;
+    });
 
-        // Limpar campos de e-mail e telefone antes de preencher os valores existentes
-        document.getElementById('form-cliente-emails-edit').innerHTML = '';
-        document.getElementById('form-cliente-telefones-edit').innerHTML = '';
+    // Exibir a modal de edição e ocultar a modal de detalhes
+    modalDetalhes.style.display = "none";
+    modalEdicao.style.display = "block";   
+         
+}
 
-        // Preencher os emails do cliente na modal de edição
-        data.emails.forEach(email => {
+
+/**
+ * Função para salvar as alterações de nome do cliente
+ */
+function salvarEdicaoCliente() {
+    const idCliente = document.getElementById('form-cliente-id-edit').value;
+    const nomeCompleto = document.getElementById('form-cliente-nome-edit').value;
+
+    // Fazer requisição para obter os detalhes completos do cliente
+    fetch(`${urlAPIClientes}/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter detalhes completos do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Atualizar o nome no objeto de dados do cliente
+            data.nomeCompleto = nomeCompleto;
+
+            // Fazer requisição para salvar as alterações do cliente
+            console.log("ANTES DA REQUISIÇÃO" + JSON.stringify(data));
+            return fetch(`${urlAPIClientes}/${idCliente}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao salvar as alterações do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('form-cliente-nome').textContent = data.nomeCompleto;
+            console.log("DEPOIS DA REQUISIÇÃO" + JSON.stringify(data));
+            fecharModalEdicao();
+            abrirModalDetalhesCliente(idCliente);
+            listarClientes();
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao salvar as alterações do cliente');
+        });
+}
+
+// Função para abrir a modal de EDIÇÃO de email do cliente
+function adicionarNovoEmailCliente(idCliente) {
+    const modalAddEmails = document.getElementById('form-cliente-modal-add-emails');
+    const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
+
+     // Exibir a modal de adição de e-mail e ocultar a modal de detalhes
+     modalDetalhes.style.display = "none";
+     modalAddEmails.style.display = "block";   
+     
+     document.getElementById('form-cliente-id-add-email').value = idCliente;    
+}
+
+
+/**
+ * Função para salvar as adição de email do cliente
+ */
+function salvarNovoEmailCliente() {
+    const idClienteElement = document.getElementById('form-cliente-id-add-email');
+    const idCliente = idClienteElement.value; // Captura o valor do campo ID do cliente
+    const novoEmail = document.getElementById('form-cliente-email-add').value.trim();
+
+    console.log('ID do cliente antes - função salvar: ' + idCliente);
+
+    if (!novoEmail) {
+        alert("Campo de novo e-mail é obrigatório");
+        return;
+    }
+
+    // Monta o objeto do novo e-mail
+    const novoEmailCliente = {
+        email: novoEmail
+    };
+
+    // Faz a requisição para obter os detalhes completos do cliente
+    fetch(`${urlAPIClientes}/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter detalhes completos do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Adiciona o novo e-mail ao array de e-mails do cliente
+            data.emails.push(novoEmailCliente);
+
+            // Faz a requisição PUT para salvar as alterações com o novo e-mail adicionado
+            return fetch(`${urlAPIClientes}/${idCliente}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao salvar as alterações do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Atualiza a interface com o nome do cliente
+            document.getElementById('form-cliente-nome').textContent = data.nomeCompleto;
+            console.log("DEPOIS DA REQUISIÇÃO" + JSON.stringify(data));
+
+            // Fecha a modal de adição de e-mail e abre os detalhes do cliente atualizados
+            fecharModalAddEmail();
+            abrirModalDetalhesCliente(idCliente);
+            listarClientes();
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao salvar as alterações do cliente');
+        });
+}
+
+// Função para fechar a modal de adição de e-mail
+function fecharModalAddEmail() {
+    const modalAddEmails = document.getElementById('form-cliente-modal-add-emails');
+    modalAddEmails.style.display = "none";
+}
+
+// Função para abrir a modal de EDIÇÃO de email cliente
+function editarEmailCliente(idCliente, idEmail) {
+    const modalEdicaoEmails = document.getElementById('form-cliente-modal-edicao-emails');
+    const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
+  
+    // Fazer requisição para obter os detalhes do cliente
+    fetch(`${urlAPIClientes}/${idCliente}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter detalhes do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Encontrar o email específico dentro dos emails do cliente
+            const email = data.emails.find(email => email.idEmail === idEmail);
+
+            if (!email) {
+                throw new Error('E-mail não encontrado para o cliente');
+            }
+
+            // Preencher os dados do e-mail na modal de edição
+            const formEmailsList = document.getElementById('form-cliente-emails-edit');
+            //formEmailsList.innerHTML = ''; // Limpar conteúdo anterior
+
             const inputEmail = document.createElement('input');
             inputEmail.type = 'email';
             inputEmail.value = email.email;
-            inputEmail.disabled = true; // Desabilitar edição
-            document.getElementById('form-cliente-emails-edit').appendChild(inputEmail);
-        });
+            inputEmail.dataset.idEmail = email.idEmail; // Guardar o ID do e-mail para referência
+            formEmailsList.appendChild(inputEmail);
 
-        // Preencher os telefones do cliente na modal de edição
-        data.telefones.forEach(telefone => {
-            const inputTelefone = document.createElement('input');
-            inputTelefone.type = 'tel';
-            inputTelefone.value = telefone.telefone;
-            inputTelefone.disabled = true; // Desabilitar edição
-            document.getElementById('form-cliente-telefones-edit').appendChild(inputTelefone);
+            // Exibir a modal de edição de e-mail e ocultar a modal de detalhes
+            modalDetalhes.style.display = "none";
+            modalEdicaoEmails.style.display = "block";   
+        })
+        .catch(error => {
+            console.error('Erro ao obter detalhes do cliente:', error);
+            alert('Erro ao obter detalhes do cliente');
         });
-
-        // Exibir apenas a modal de edição
-        modalDetalhes.style.display = "none";
-        modalEdicao.style.display = "block";
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao obter detalhes do cliente');
-    });
+         
 }
+
+
 
 /**
  * Função para fechar a modal de EDICAO
@@ -290,7 +441,7 @@ function fecharModalEdicao() {
 // Função para abrir a modal de DETALHES do cliente
 function abrirModalDetalhesCliente(idCliente) {
     const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
-    const modalEdicao = document.getElementById('form-cliente-modal-edicao');
+    //const modalEdicao = document.getElementById('form-cliente-modal-edicao');
   
     // Fazer requisição para obter os detalhes do cliente
     fetch(`${urlAPIClientes}/${idCliente}`)
@@ -315,7 +466,12 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${email.idEmail}</td>
-                        <td>${email.email}</td>                        
+                        <td>${email.email}</td>
+                        <td>
+                            <button class="btn-novo-email" onclick="adicionarNovoEmailCliente(${email.idEmail})">Novo</button>
+                            <button class="btn-editar-email" onclick="editarEmailCliente(${idCliente}, ${email.idEmail})">Editar</button>
+                            <button class="btn-excluir-email" onclick="excluirEmailCliente(${email.idEmail})">Excluir</button>
+                        </td>                       
                     `;
                     formEmailsList.appendChild(row);
                 }
@@ -333,7 +489,12 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${telefone.idTelefone}</td>
-                        <td>${telefone.telefone}</td>                        
+                        <td>${telefone.telefone}</td> 
+                        <td>
+                            <button class="btn-novo-telefone" onclick="adicionarNovoTelefoneCliente(${telefone.idTelefone})">Novo</button>
+                            <button class="btn-editar-telefone" onclick="editarTelefoneCliente(${telefone.idTelefone})">Editar</button>
+                            <button class="btn-excluir-telefone" onclick="excluirTelefoneCliente(${telefone.idTelefone})">Excluir</button>
+                        </td>                      
                     `;
                     formTelefonesList.appendChild(row);
                 }
@@ -428,3 +589,7 @@ function limparPesquisaCliente() {
     document.getElementById('id_cliente').value = '';
     listarClientes();
 }
+
+/****************************************************/
+/******************* CONTATOS ***********************/
+/****************************************************/
