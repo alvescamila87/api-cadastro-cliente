@@ -44,9 +44,6 @@
         <!-- Seção pesquisar cliente por ID -->
         <h3>Pesquisar cliente por ID</h3>
         <form >
-            <button type="button" onclick="gerarRelatorio()">Gerar Relatório</button>
-         </form>
-        <form >
            <input type="text" id="id_cliente" name="id_cliente" placeholder="Digite o ID do cliente"><br><br>
            <button type="button" onclick="pesquisarCliente()">Pesquisar</button>
            <button type="button" onclick="limparPesquisaCliente()">Limpar pesquisa</button>
@@ -73,7 +70,7 @@
             <span class="close-button" onclick="fecharModalDetalhes()">&times;</span>
             <div id="modal-content-cliente" class="cliente-info">
                 <h4>Informações do Cliente</h4>
-                <p><strong>ID:</strong> <span id="form-cliente-id"></span></p>
+                <p><strong>ID Cliente:</strong> <span id="form-cliente-id"></span></p>
                 <p><strong>Criado em:</strong> <span id="form-cliente-criado-em"></span></p>
                 <p><strong>Nome completo:</strong> <span id="form-cliente-nome"></span></p>                
             </div>
@@ -130,7 +127,7 @@
         </div>
     </section>
     
-    <!-- Seção adicionar contato ao cliente -->
+    <!-- Seção adicionar contato associado ao cliente -->
     <section id="form-cliente-modal-contato" class="section-group-modal">
         <div class="modal-content">
             <span class="close-button" onclick="fecharModalContato()">&times;</span>
@@ -150,6 +147,20 @@
                     <input type="text" name="telefone-contato" id="telefone-contato" placeholder="(00) 0000-00000" required><br><br>
                     <button type="button" onclick="salvarContato()">Salvar contato</button>
                 </form>
+            </div>            
+          </div>
+    </section>
+
+    <!-- Seção detalhes do contato associado ao cliente -->
+    <section id="form-cliente-modal-contato-detalhes" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalContatoDetalhes()">&times;</span>
+            <div id="modal-content-contato-detalhes" class="contato-info-detalhes">
+                <h4>Detalhes do contato</h4>
+                <p><strong>ID Contato:</strong> <span id="detalhes-id-contato"></span></p>
+                <p><strong>Nome completo:</strong> <span id="detalhes-nome-contato"></span></p>
+                <p><strong>E-mail:</strong> <span id="detalhes-email-contato"></span></p>
+                <p><strong>Telefone:</strong> <span id="detalhes-telefone-contato"></span></p>
             </div>            
           </div>
     </section>

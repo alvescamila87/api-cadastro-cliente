@@ -441,7 +441,6 @@ function fecharModalEdicao() {
 // Função para abrir a modal de DETALHES do cliente
 function abrirModalDetalhesCliente(idCliente) {
     const modalDetalhes = document.getElementById('form-cliente-modal-detalhes');
-    //const modalEdicao = document.getElementById('form-cliente-modal-edicao');
   
     // Fazer requisição para obter os detalhes do cliente
     fetch(`${urlAPIClientes}/${idCliente}`)
@@ -670,9 +669,9 @@ function adicionarContatoNaTabela(idCliente, contato) {
     celulaId.textContent = contato.idContato;
     celulaNome.textContent = contato.nomeCompleto;
     celulaAcoes.innerHTML = `
-        <button id="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
-        <button id="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
-        <button id="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
+        <button class="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
+        <button class="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
+        <button class="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
     `;    
 }
 
@@ -702,9 +701,9 @@ function listarContatosPorCliente(idCliente) {
                 celulaId.textContent = contato.idContato;
                 celulaNome.textContent = contato.nomeCompleto;
                 celulaAcoes.innerHTML = `
-                    <button id="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
-                    <button id="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
-                    <button id="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
+                    <button class="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
+                    <button class="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
+                    <button class="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
                 `; 
             });
         })
@@ -714,16 +713,44 @@ function listarContatosPorCliente(idCliente) {
         });
 }
 
-function detalhesContato(idContato) {
-    // Implementar lógica para exibir os detalhes do contato
-    console.log("Exibindo detalhes do contato com ID:", idContato);
-    // Você pode abrir um modal com mais detalhes do contato, por exemplo
+function detalhesContato(idCliente, idContato) {
+    console.log("Cliente: " + idCliente +" Contato: " + idContato); 
+
+    const modalDetalhesContato = document.getElementById('form-cliente-modal-contato-detalhes');    
+    
+    // Fazer requisição para obter os detalhes do contato
+    fetch(`${urlAPIClientes}/${idCliente}/contatos/${idContato}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter detalhes do contato');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Preencher os dados na modal
+            document.getElementById('detalhes-id-contato').textContent = data.idContato;
+            document.getElementById('detalhes-nome-contato').textContent = data.nomeCompleto;
+            document.getElementById('detalhes-email-contato').textContent = data.email;
+            document.getElementById('detalhes-telefone-contato').textContent = data.telefone;
+
+            // Exibir a modal
+            modalDetalhesContato.style.display = "block";
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao obter detalhes do contato');
+        });
 }
 
+function fecharModalContatoDetalhes() {
+    const modalDetalhesContato = document.getElementById('form-cliente-modal-contato-detalhes');
+    modalDetalhesContato.style.display = "none";
+}
+
+
 function editarContato(idContato) {
-    // Implementar lógica para editar o contato
     console.log("Editando contato com ID:", idContato);
-    // Você pode abrir um modal com um formulário de edição para o contato
+
 }
 
 function excluirContato(idCliente, idContato) {

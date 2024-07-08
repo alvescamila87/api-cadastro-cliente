@@ -236,7 +236,7 @@ footer p {
     background-color: #45a049;
 }
 
-/* Estilos específicos para os botões da modal */
+/* Estilos específicos para os botões da modal de botões de cliente e contato*/
 .btn-detalhes, .btn-detalhes-contato {
     background: #bfc2c4; 
     color: #fff;
@@ -251,7 +251,8 @@ footer p {
     background: #a4a6a8;
 }
 
-.btn-editar, .btn-editar-email, .btn-editar-telefone, .btn-editar-contato {
+.btn-editar, .btn-editar-email, 
+.btn-editar-telefone, .btn-editar-contato {
     background: #3498db; 
     color: #fff;
     padding: 15px;     
@@ -261,13 +262,14 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-editar:hover, .btn-editar-email:hover, .btn-editar-telefone:hover, .btn-editar-contato:hover {
-    
+.btn-editar:hover, .btn-editar-email:hover, 
+.btn-editar-telefone:hover, .btn-editar-contato:hover {
     background: #2980b9;
 }
 
 
-.btn-excluir,.btn-excluir-email, .btn-excluir-telefone, .btn-excluir-contato {
+.btn-excluir,.btn-excluir-email, 
+.btn-excluir-telefone, .btn-excluir-contato {
     background: #f44336; 
     color: #fff;
     padding: 15px; 
@@ -276,7 +278,8 @@ footer p {
     cursor: pointer;
 }
 
-.btn-excluir:hover, .btn-excluir-email:hover, .btn-excluir-telefone:hover, .btn-excluir-contato:hover {
+.btn-excluir:hover, .btn-excluir-email:hover, 
+.btn-excluir-telefone:hover, .btn-excluir-contato:horizontal {
     background: #da190b;
 }
 
