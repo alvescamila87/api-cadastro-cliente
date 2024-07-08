@@ -634,7 +634,7 @@ function salvarContato(cliente) {
     .then(data => {
         alert("Contato adicionado com sucesso!");
         console.log(data);
-        adicionarContatoNaTabela(data);
+        adicionarContatoNaTabela(idCliente, data);
         fecharModalContato();
         listarClientes();
         listarContatosPorCliente(idCliente);
@@ -659,7 +659,7 @@ function abrirModalContato(cliente) {
     console.log("DEPOIS - Chamou abrirModalContato para o cliente ID:", cliente);
 }
 
-function adicionarContatoNaTabela(contato) {
+function adicionarContatoNaTabela(idCliente, contato) {
     const tabelaContatos = document.getElementById('form-cliente-contatos');
     const novaLinha = tabelaContatos.insertRow();
 
@@ -670,9 +670,9 @@ function adicionarContatoNaTabela(contato) {
     celulaId.textContent = contato.idContato;
     celulaNome.textContent = contato.nomeCompleto;
     celulaAcoes.innerHTML = `
-        <button id="btn-detalhes-contato" onclick="detalhesContato(${contato.idContato})">Detalhes</button>
-        <button id="btn-editar-contato" onclick="editarContato(${contato.idContato})">Editar</button>
-        <button id="btn-excluir-contato" onclick="excluirContato(${contato.idContato})">Excluir</button>
+        <button id="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
+        <button id="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
+        <button id="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
     `;    
 }
 
@@ -702,9 +702,9 @@ function listarContatosPorCliente(idCliente) {
                 celulaId.textContent = contato.idContato;
                 celulaNome.textContent = contato.nomeCompleto;
                 celulaAcoes.innerHTML = `
-                    <button id="btn-detalhes-contato" onclick="detalhesContato(${contato.idContato})">Detalhes</button>
-                    <button id="btn-editar-contato" onclick="editarContato(${contato.idContato})">Editar</button>
-                    <button id="btn-excluir-contato" onclick="excluirContato(${contato.idContato})">Excluir</button>
+                    <button id="btn-detalhes-contato" onclick="detalhesContato(${idCliente}, ${contato.idContato})">Detalhes</button>
+                    <button id="btn-editar-contato" onclick="editarContato(${idCliente}, ${contato.idContato})">Editar</button>
+                    <button id="btn-excluir-contato" onclick="excluirContato(${idCliente}, ${contato.idContato})">Excluir</button>
                 `; 
             });
         })
@@ -728,16 +728,15 @@ function editarContato(idContato) {
 
 function excluirContato(idCliente, idContato) {
     // Confirmar a exclusão do contato
+    console.log("Cliente: " + idCliente  + "Contato: " + idContato);
     if (confirm("Tem certeza de que deseja excluir este contato?")) {
-        // Implementar lógica para excluir o contato
-        fetch(`${urlAPIClientes}/${idCliente}/contatos`, {
+        fetch(`${urlAPIClientes}/${idCliente}/contatos/${idContato}`, {
             method: 'DELETE',
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro ao excluir contato');
             }
-            // Remover a linha da tabela após a exclusão bem-sucedida
             const linha = document.querySelector(`#form-cliente-contatos tr[data-id-contato="${idContato}"]`);
             if (linha) {
                 linha.remove();
@@ -747,6 +746,9 @@ function excluirContato(idCliente, idContato) {
         .catch(error => {
             console.error('Erro:', error);
             alert('Erro ao excluir contato');
+            fecharModalContato();
+            listarClientes();
+            listarContatosPorCliente(idCliente);
         });
     }
 }
