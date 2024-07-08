@@ -654,8 +654,6 @@ function fecharModalContato() {
 function abrirModalContato(cliente) {
     console.log("ANTES - Chamou abrirModalContato para o cliente ID:", cliente);
     document.getElementById('form-cliente-id-contato').innerText = cliente;
-    document.getElementById('form-cliente-nome-contato').innerText = cliente.nomeCompleto;
-    document.getElementById('form-cliente-criado-em-contato').innerText = cliente.criadoEm;
     document.getElementById('form-cliente-modal-contato').style.display = 'block';
 
     console.log("DEPOIS - Chamou abrirModalContato para o cliente ID:", cliente);
@@ -728,7 +726,7 @@ function editarContato(idContato) {
     // Você pode abrir um modal com um formulário de edição para o contato
 }
 
-function excluirContato(idContato) {
+function excluirContato(idCliente, idContato) {
     // Confirmar a exclusão do contato
     if (confirm("Tem certeza de que deseja excluir este contato?")) {
         // Implementar lógica para excluir o contato
@@ -762,7 +760,7 @@ function gerarRelatorio() {
     }
 
      // Se houver clientes, faz a requisição para gerar o relatório em PDF
-     fetch(`${urlAPIClientes}`/'relatorio')
+     fetch(`${urlAPIClientes}/relatorio`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro ao gerar relatório');

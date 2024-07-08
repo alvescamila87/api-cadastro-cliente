@@ -186,7 +186,7 @@ footer p {
 }
 
 .cliente-table th, .cliente-table td {
-    border: 1px solid #ddd; /* Borda cinza */
+    border: 1px solid #ddd; 
     padding: 8px;
     text-align: left;
 }
@@ -197,6 +197,43 @@ footer p {
 
 .cliente-table tbody tr:hover {
     background-color: #f2f2f2; 
+}
+
+/* Estilo o modal de adicionar contato */
+.cliente-info-contato {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.contato-info {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.contato-info label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contato-info input[type="text"] {
+    width: calc(100% - 12px); 
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box; 
+}
+
+.contato-info button {
+    background-color: #a4a6a8; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.contato-info button:hover {
+    background-color: #45a049;
 }
 
 /* Estilos específicos para os botões da modal */

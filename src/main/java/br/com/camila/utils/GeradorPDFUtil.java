@@ -49,7 +49,7 @@ public class GeradorPDFUtil {
             Font fontHeader = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
             Font fontBody = new Font(Font.FontFamily.HELVETICA, 12);
 
-            Paragraph title = new Paragraph("Relatório Contatos por Cliente", fontTitle);
+            Paragraph title = new Paragraph("Relatório de Clientes e Contatos", fontTitle);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             document.add(new Paragraph("\n"));
