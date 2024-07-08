@@ -111,7 +111,7 @@ function listarClientes() {
                     <button class="btn-detalhes" onclick="abrirModalDetalhesCliente(${cliente.idCliente})">Detalhes</button>
                     <button class="btn-editar" onclick="abrirModalEdicaoCliente(${cliente.idCliente})">Editar</button>
                     <button class="btn-excluir" onclick="excluirCliente(${cliente.idCliente})">Excluir</button>
-                    <button class="btn-add-contato" onclick="adicionarContatoAoCliente(${cliente.idCliente})">Adicionar contato</button>
+                    <button class="btn-add-contato" onclick="abrirModalContato(${cliente.idCliente})">Adicionar contato</button>                    
                 </td>
             `;
                 listaClientes.appendChild(row);
@@ -593,3 +593,194 @@ function limparPesquisaCliente() {
 /****************************************************/
 /******************* CONTATOS ***********************/
 /****************************************************/
+
+function salvarContato(cliente) {
+    console.log("PARAMETRO ANTES -> ID do cliente para salvar contato:", cliente);
+    const idCliente = document.getElementById('form-cliente-id-contato').innerText;
+    console.log("Salvar contato idCliente: " + idCliente);
+
+    // Coletar dados do formulário
+    const nomeContato = document.getElementById('nome-contato').value.trim();
+    const emailContato = document.getElementById('email-contato').value.trim();
+    const telefoneContato = document.getElementById('telefone-contato').value.trim();
+
+    // Validar se todos os campos obrigatórios estão preenchidos
+    if (!nomeContato || !emailContato || !telefoneContato) {
+        alert("Todos os campos são obrigatórios e devem ser preenchidos.");
+        return;
+    }
+
+    // Construir objeto do novo contato
+    const novoContato = {
+        nomeCompleto: nomeContato,
+        emails: [{ email: emailContato }],
+        telefones: [{ telefone: telefoneContato }]
+    };
+
+    // Enviar solicitação POST para a API
+    fetch(`${urlAPIClientes}/${idCliente}/contatos`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(novoContato)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao adicionar contato');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Contato adicionado com sucesso!");
+        console.log(data);
+        adicionarContatoNaTabela(data);
+        fecharModalContato();
+        listarClientes();
+        listarContatosPorCliente(idCliente);
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao adicionar contato');
+    });
+}
+
+function fecharModalContato() {
+    document.getElementById('form-cliente-modal-contato').style.display = 'none';
+}
+
+
+// Para abrir a modal com os dados do cliente preenchidos, você pode usar essa função
+function abrirModalContato(cliente) {
+    console.log("ANTES - Chamou abrirModalContato para o cliente ID:", cliente);
+    document.getElementById('form-cliente-id-contato').innerText = cliente;
+    document.getElementById('form-cliente-nome-contato').innerText = cliente.nomeCompleto;
+    document.getElementById('form-cliente-criado-em-contato').innerText = cliente.criadoEm;
+    document.getElementById('form-cliente-modal-contato').style.display = 'block';
+
+    console.log("DEPOIS - Chamou abrirModalContato para o cliente ID:", cliente);
+}
+
+function adicionarContatoNaTabela(contato) {
+    const tabelaContatos = document.getElementById('form-cliente-contatos');
+    const novaLinha = tabelaContatos.insertRow();
+
+    const celulaId = novaLinha.insertCell(0);
+    const celulaNome = novaLinha.insertCell(1);
+    const celulaAcoes = novaLinha.insertCell(2);
+
+    celulaId.textContent = contato.idContato;
+    celulaNome.textContent = contato.nomeCompleto;
+    celulaAcoes.innerHTML = `
+        <button id="btn-detalhes-contato" onclick="detalhesContato(${contato.idContato})">Detalhes</button>
+        <button id="btn-editar-contato" onclick="editarContato(${contato.idContato})">Editar</button>
+        <button id="btn-excluir-contato" onclick="excluirContato(${contato.idContato})">Excluir</button>
+    `;    
+}
+
+function listarContatosPorCliente(idCliente) {
+    fetch(`${urlAPIClientes}/${idCliente}/contatos`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao listar contatos do cliente');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const tabelaContatos = document.getElementById('form-cliente-contatos');
+            tabelaContatos.innerHTML = '';
+
+            if (data.length === 0) {
+                tabelaContatos.innerHTML = '<tr><td colspan="3">Nenhum contato cadastrado.</td></tr>';
+                return;
+            }
+
+            data.forEach(contato => {
+                const novaLinha = tabelaContatos.insertRow();
+                const celulaId = novaLinha.insertCell(0);
+                const celulaNome = novaLinha.insertCell(1);
+                const celulaAcoes = novaLinha.insertCell(2);
+
+                celulaId.textContent = contato.idContato;
+                celulaNome.textContent = contato.nomeCompleto;
+                celulaAcoes.innerHTML = `
+                    <button id="btn-detalhes-contato" onclick="detalhesContato(${contato.idContato})">Detalhes</button>
+                    <button id="btn-editar-contato" onclick="editarContato(${contato.idContato})">Editar</button>
+                    <button id="btn-excluir-contato" onclick="excluirContato(${contato.idContato})">Excluir</button>
+                `; 
+            });
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao listar contatos do cliente');
+        });
+}
+
+function detalhesContato(idContato) {
+    // Implementar lógica para exibir os detalhes do contato
+    console.log("Exibindo detalhes do contato com ID:", idContato);
+    // Você pode abrir um modal com mais detalhes do contato, por exemplo
+}
+
+function editarContato(idContato) {
+    // Implementar lógica para editar o contato
+    console.log("Editando contato com ID:", idContato);
+    // Você pode abrir um modal com um formulário de edição para o contato
+}
+
+function excluirContato(idContato) {
+    // Confirmar a exclusão do contato
+    if (confirm("Tem certeza de que deseja excluir este contato?")) {
+        // Implementar lógica para excluir o contato
+        fetch(`${urlAPIClientes}/${idCliente}/contatos`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao excluir contato');
+            }
+            // Remover a linha da tabela após a exclusão bem-sucedida
+            const linha = document.querySelector(`#form-cliente-contatos tr[data-id-contato="${idContato}"]`);
+            if (linha) {
+                linha.remove();
+            }
+            alert("Contato excluído com sucesso!");
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir contato');
+        });
+    }
+}
+
+function gerarRelatorio() {
+    // Verifica se há clientes na lista antes de gerar o relatório
+    const listaClientes = document.getElementById('form-cliente-list-tuples');
+    if (listaClientes.rows.length === 0) {
+        alert('Não há clientes cadastrados para gerar o relatório.');
+        return;
+    }
+
+     // Se houver clientes, faz a requisição para gerar o relatório em PDF
+     fetch(`${urlAPIClientes}`/'relatorio')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao gerar relatório');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${new Date().toISOString().split('T')[0]}_Relatorio_Clientes.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao gerar relatório');
+        });
+}

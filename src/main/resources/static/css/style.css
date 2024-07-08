@@ -172,10 +172,9 @@ footer p {
 
 /* Estilo para os detalhes do cliente */
 .cliente-info {
-    background-color: lightgray; /* Fundo cinza claro */
+    background-color: lightgray; 
     padding: 10px;
-    border: 1px solid #aaa7a7; /* Borda cinza */
-    /* border-radius: 5px; */
+    border: 1px solid #aaa7a7; 
     margin-bottom: 15px;
 }
 
@@ -193,15 +192,15 @@ footer p {
 }
 
 .cliente-table th {
-    background-color: lightgray; /* Fundo cinza claro para cabeçalho */
+    background-color: lightgray; 
 }
 
 .cliente-table tbody tr:hover {
-    background-color: #f2f2f2; /* Fundo cinza claro ao passar o mouse */
+    background-color: #f2f2f2; 
 }
 
 /* Estilos específicos para os botões da modal */
-.btn-detalhes {
+.btn-detalhes, .btn-detalhes-contato {
     background: #bfc2c4; 
     color: #fff;
     padding: 15px; 
@@ -211,11 +210,11 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-detalhes:hover {
+.btn-detalhes:hover, .btn-detalhes-contato:hover {
     background: #a4a6a8;
 }
 
-.btn-editar, .btn-editar-email, .btn-editar-telefone {
+.btn-editar, .btn-editar-email, .btn-editar-telefone, .btn-editar-contato {
     background: #3498db; 
     color: #fff;
     padding: 15px;     
@@ -225,13 +224,13 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-editar:hover, .btn-editar-email:hover, .btn-editar-telefone:hover {
+.btn-editar:hover, .btn-editar-email:hover, .btn-editar-telefone:hover, .btn-editar-contato:hover {
     
     background: #2980b9;
 }
 
 
-.btn-excluir,.btn-excluir-email, .btn-excluir-telefone {
+.btn-excluir,.btn-excluir-email, .btn-excluir-telefone, .btn-excluir-contato {
     background: #f44336; 
     color: #fff;
     padding: 15px; 
@@ -240,7 +239,7 @@ footer p {
     cursor: pointer;
 }
 
-.btn-excluir:hover, .btn-excluir-email:hover, .btn-excluir-telefone:hover {
+.btn-excluir:hover, .btn-excluir-email:hover, .btn-excluir-telefone:hover, .btn-excluir-contato:hover {
     background: #da190b;
 }
 
@@ -257,9 +256,8 @@ footer p {
     background: #0c922e; 
 }
 
-/* Estilos para as seções: de pesquisa por ID e adicionar cliente, contato */
-#form-cliente-add, #form-cliente-list form, 
-#form-contato-add, #form-contato-list form {
+/* Estilos para as seções: de pesquisa por ID e adicionar cliente */
+#form-cliente-add, #form-cliente-list form {
     border: 1px solid #ccc;
     padding: 10px;
     margin-top: 15px;

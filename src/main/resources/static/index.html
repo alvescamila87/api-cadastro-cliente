@@ -11,8 +11,9 @@
         <h1>Customers HUB</h1>
     </header>
     <nav>
-        <a href="#" onclick="showSection('form-cliente-list'); listarClientes();">Listar clientes</a>
+        <a href="#" onclick="showSection('form-cliente-list'); listarClientes();">Lista de clientes</a>        
         <a href="#" onclick="showSection('form-cliente-add')">Adicionar cliente</a>
+        <a href="#" onclick="showSection('form-relatorio')">Gerar gelatório</a>
     </nav>
     
     <!-- Seção adicionar cliente -->
@@ -42,6 +43,9 @@
     <section id="form-cliente-list"  class="section-group">
         <!-- Seção pesquisar cliente por ID -->
         <h3>Pesquisar cliente por ID</h3>
+        <form >
+            <button type="button" onclick="gerarRelatorio()">Gerar Relatório</button>
+         </form>
         <form >
            <input type="text" id="id_cliente" name="id_cliente" placeholder="Digite o ID do cliente"><br><br>
            <button type="button" onclick="pesquisarCliente()">Pesquisar</button>
@@ -97,6 +101,18 @@
                     <!-- Telefones do cliente serão listados aqui -->
                 </tbody>
             </table>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Contatos do cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-contatos">
+                    <!-- Contatos do cliente serão listados aqui -->
+                </tbody>
+            </table>
           </div>
     </section>
 
@@ -113,42 +129,65 @@
             </form>        
         </div>
     </section>
-
-    <!-- Seção adicionar email do cliente por ID -->
-    <section id="form-cliente-modal-add-emails" class="section-group-modal">
+    
+    <!-- Seção adicionar contato ao cliente -->
+    <section id="form-cliente-modal-contato" class="section-group-modal">
         <div class="modal-content">
-            <span class="close-button" onclick="fecharModalAddEmail()">&times;</span>
-            <h3>Adicionar e-mail de cliente</h3>
-            <form>
-                <input type="hidden" id="form-cliente-id-edit">
-                <label for="form-cliente-email-add">Novo e-mail:</label>
-                <input type="email" id="form-cliente-email-add">
-                <button type="button" onclick="salvarNovoEmailCliente()">Salvar</button>
-            </form>          
-        </div>
+            <span class="close-button" onclick="fecharModalContato()">&times;</span>
+            <div id="modal-content-cliente-contato" class="cliente-info-contato">
+                <h4>Informações do Cliente</h4>
+                <p><strong>ID:</strong> <span id="form-cliente-id-contato" data-cliente-id=""></span></p>
+                <p><strong>Nome completo:</strong> <span id="form-cliente-nome-contato"></span></p>
+                <p><strong>Criado em:</strong> <span id="form-cliente-criado-em-contato"></span></p>
+            </div>
+            <div id="modal-content-contato" class="contato-info">
+                <h4>Cadastrar contato</h4>
+                <label for="nome-contato">Nome completo:</label>
+                <input type="text" name="nome-contato" id="nome-contato" placeholder="Informe o nome completo do contato" required><br><br>
+
+                <label for="email-contato">E-mail:</label>
+                <input type="text" name="email-contato" id="email-contato" placeholder="nome@email.com" required><br><br>
+
+                <label for="telefone-contato">Telefone:</label>
+                <input type="text" name="telefone-contato" id="telefone-contato" placeholder="(00) 0000-00000" required><br><br>
+                <button type="button" onclick="salvarContato()">Salvar contato</button>
+            </div>            
+          </div>
     </section>
 
-    <!-- Seção edição de email do cliente por ID -->
-    <section id="form-cliente-modal-edicao-emails" class="section-group-modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="fecharModalEdicao()">&times;</span>
-            <h3>Editar Cliente</h3>
+    <!-- Seção listar contato -->
+    <section id="form-contato-list"  class="section-group">
+        <!-- Seção pesquisar contato por ID -->
+        <h3>Pesquisar contato por ID</h3>
+        <form >
+           <input type="text" id="id_contato" name="id_contato" placeholder="Digite o ID do conato"><br><br>
+           <button type="button" onclick="pesquisarContato()">Pesquisar</button>
+           <button type="button" onclick="limparPesquisaContato()">Limpar pesquisa</button>
+        </form>
+        <h3>Lista de Contatos</h3>
+        <table >
+            <thead>
+               <tr>
+                   <th>ID Contato</th>
+                   <th>ID Cliente Associado</th>
+                   <th>Nome completo</th>
+                   <th>Ações</th>
+               </tr>
+            </thead>
+            <tbody id="form-contato-list-tuples">
+               <!-- Contatos serão listados aqui -->
+            </tbody>
+        </table>
+    </section> 
+    
+        <!-- Seção relatório cliente e contato -->
+        <section id="form-relatorio"  class="section-group">
+            <h3>Relatório de clientes</h3>
             <form>
-                <table class="cliente-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>E-mails do cliente</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="form-cliente-emails">
-                        <p>TESTE E-MAILS</p>
-                        <!-- E-mails do cliente serão listados aqui -->
-                    </tbody>
-            </form>        
-        </div>
-    </section>    
+                <button type="button" onclick="gerarRelatorio()">Gerar Relatório</button>
+            </form>
+        </section>              
+
     <footer>
         <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
     </footer>  
