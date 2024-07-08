@@ -140,11 +140,17 @@
                     <label for="nome-contato">Nome completo:</label>
                     <input type="text" name="nome-contato" id="nome-contato" placeholder="Informe o nome completo do contato" required><br><br>
 
-                    <label for="email-contato">E-mail:</label>
-                    <input type="text" name="email-contato" id="email-contato" placeholder="nome@email.com" required><br><br>
+                    <div class="form-group-contato" id="divEmailsContato">
+                        <label for="email_contato-add">E-mail:</label>
+                        <input type="email" class="emailInputContato" name="email_contato-add" placeholder="nome@email.com" required>
+                        <button type="button" onclick="adicionarCampoEmailContato()">Adicionar campo de e-mail</button>
+                    </div>
+                    <div class="form-group-contato" id="divTelefonesContato">
+                        <label for="telefone_contato-add">Telefone:</label>
+                        <input type="tel" class="telefoneInputContato" name="telefone_contato-add" placeholder="(00) 0000-0000" required>
+                        <button type="button" onclick="adicionarCampoTelefoneContato()">Adicionar campo de telefone</button>
+                    </div>            
 
-                    <label for="telefone-contato">Telefone:</label>
-                    <input type="text" name="telefone-contato" id="telefone-contato" placeholder="(00) 0000-00000" required><br><br>
                     <button type="button" onclick="salvarContato()">Salvar contato</button>
                 </form>
             </div>            
@@ -159,9 +165,27 @@
                 <h4>Detalhes do contato</h4>
                 <p><strong>ID Contato:</strong> <span id="detalhes-id-contato"></span></p>
                 <p><strong>Nome completo:</strong> <span id="detalhes-nome-contato"></span></p>
-                <p><strong>E-mail:</strong> <span id="detalhes-email-contato"></span></p>
-                <p><strong>Telefone:</strong> <span id="detalhes-telefone-contato"></span></p>
-            </div>            
+            </div> 
+            <table class="contato-table">
+                <thead>
+                    <tr>
+                        <th>E-mails do contato</th>
+                    </tr>
+                </thead>
+                <tbody id="detalhes-emails-contato">
+                    <!-- E-mails do contato serão listados aqui -->
+                </tbody>
+            </table>
+            <table class="contato-table">
+                <thead>
+                    <tr>
+                        <th>Telefones do contato</th>
+                    </tr>
+                </thead>
+                <tbody id="detalhes-telefones-contato">
+                    <!-- Telefones do contato serão listados aqui -->
+                </tbody>
+            </table>           
           </div>
     </section>
 
