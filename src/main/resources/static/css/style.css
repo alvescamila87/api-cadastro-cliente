@@ -224,7 +224,7 @@ footer p {
 }
 
 .contato-info button {
-    background-color: #a4a6a8; 
+    background-color: #bfc2c4; 
     color: white;
     padding: 10px 15px;
     border: none;
@@ -233,11 +233,13 @@ footer p {
 }
 
 .contato-info button:hover {
-    background-color: #45a049;
+    background-color: #a4a6a8;
 }
 
 /* Estilos específicos para os botões da modal de botões de cliente e contato*/
-.btn-detalhes, .btn-detalhes-contato {
+.btn-detalhes, 
+.btn-detalhes-contato, 
+.btn-salvar-contato {
     background: #bfc2c4; 
     color: #fff;
     padding: 15px; 
@@ -247,12 +249,16 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-detalhes:hover, .btn-detalhes-contato:hover {
+.btn-detalhes:hover, 
+.btn-detalhes-contato:hover,
+.btn-salvar-contato:hover {
     background: #a4a6a8;
 }
 
-.btn-editar, .btn-editar-email, 
-.btn-editar-telefone, .btn-editar-contato {
+.btn-editar, 
+.btn-editar-email, 
+.btn-editar-telefone, 
+.btn-editar-contato {
     background: #3498db; 
     color: #fff;
     padding: 15px;     
@@ -262,14 +268,18 @@ footer p {
     margin-right: 10px; 
 }
 
-.btn-editar:hover, .btn-editar-email:hover, 
-.btn-editar-telefone:hover, .btn-editar-contato:hover {
+.btn-editar:hover, 
+.btn-editar-email:hover, 
+.btn-editar-telefone:hover, 
+.btn-editar-contato:hover {
     background: #2980b9;
 }
 
 
-.btn-excluir,.btn-excluir-email, 
-.btn-excluir-telefone, .btn-excluir-contato {
+.btn-excluir,
+.btn-excluir-email, 
+.btn-excluir-telefone, 
+.btn-excluir-contato {
     background: #f44336; 
     color: #fff;
     padding: 15px; 
@@ -278,12 +288,16 @@ footer p {
     cursor: pointer;
 }
 
-.btn-excluir:hover, .btn-excluir-email:hover, 
-.btn-excluir-telefone:hover, .btn-excluir-contato:horizontal {
+.btn-excluir:hover, 
+.btn-excluir-email:hover, 
+.btn-excluir-telefone:hover, 
+.btn-excluir-contato:hover {
     background: #da190b;
 }
 
-.btn-novo-telefone, .btn-novo-email, .btn-add-contato {
+.btn-novo-telefone, 
+.btn-novo-email, 
+.btn-add-contato {
     background: #11c03d; 
     color: #fff;
     padding: 15px; 
@@ -292,7 +306,9 @@ footer p {
     cursor: pointer;
 }
 
-.btn-novo-telefone:hover, .btn-novo-email:hover, .btn-add-contato:hover {
+.btn-novo-telefone:hover, 
+.btn-novo-email:hover, 
+.btn-add-contato:hover {
     background: #0c922e; 
 }
 
@@ -305,3 +321,84 @@ footer p {
     border-radius: 5px;
 }
 
+/* Estilos para a tela de detalhes do contato */
+#form-cliente-modal-contato-detalhes, 
+#form-cliente-modal-contato-editar {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+#form-cliente-modal-contato-detalhes .modal-content, 
+#form-cliente-modal-contato-editar .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#form-cliente-modal-contato-detalhes .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#form-cliente-modal-contato-detalhes .close-button:hover,
+#form-cliente-modal-contato-detalhes .close-button:focus,
+#form-cliente-modal-contato-editar .close-button:hover,
+#form-cliente-modal-contato-editar .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-content-contato-detalhes {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#modal-content-contato-detalhes h4, #modal-content-contato-editar h4 {
+    margin-bottom: 10px;
+}
+
+#modal-content-contato-detalhes p {
+    margin-bottom: 5px;
+}
+
+#modal-content-contato-detalhes strong {
+    font-weight: bold;
+}
+
+#modal-content-contato-detalhes span {
+    margin-left: 10px;
+}
+
+#modal-content-contato-editar {
+    padding: 10px;
+}
+
+#modal-content-contato-editar label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#modal-content-contato-editar input[type="text"] {
+    width: calc(100% - 12px);
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+#modal-content-contato-editar input[type="hidden"] {
+    display: none;
+}

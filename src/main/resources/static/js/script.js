@@ -775,7 +775,7 @@ function editarContato(idCliente, idContato) {
         };
 
         botaoSalvar.appendChild(btnSalvar);
-        botaoSalvarAdicionado = true; // Marca que o botão foi adicionado
+        botaoSalvarAdicionado = true; 
     }
     
 }
