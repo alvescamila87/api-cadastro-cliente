@@ -3,9 +3,8 @@
 ## Sobre o projeto
 Projeto prático que cria uma API REST de cadastro de clientes que permite vincular contatos. 
 Gera relatório em PDF que mosta os Clientes e Contatos associados aquele.
-
-![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/b540d6d4-0914-4609-8d35-4b45c03acb80)
-![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/944eb213-894d-491b-acf7-4b2a961fb133)
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/3aa82b12-e373-442c-b872-f95c3d37b72f)
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/b9b2eb57-837d-4317-82ba-f438941d54f0)
 
 ## DER
 ![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/a0ad7b57-1912-458f-9307-ae296cf71885)
