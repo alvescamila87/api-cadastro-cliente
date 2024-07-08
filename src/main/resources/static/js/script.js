@@ -655,6 +655,11 @@ function abrirModalContato(cliente) {
     document.getElementById('form-cliente-id-contato').innerText = cliente;
     document.getElementById('form-cliente-modal-contato').style.display = 'block';
 
+    // Limpar os campos do formulário de adicionar contato
+    document.getElementById('nome-contato').value = '';
+    document.getElementById('email-contato').value = '';
+    document.getElementById('telefone-contato').value = '';
+
     console.log("DEPOIS - Chamou abrirModalContato para o cliente ID:", cliente);
 }
 
@@ -747,10 +752,69 @@ function fecharModalContatoDetalhes() {
     modalDetalhesContato.style.display = "none";
 }
 
+// Variável global para controlar se o botão de salvar já foi adicionado
+let botaoSalvarAdicionado = false;
 
-function editarContato(idContato) {
-    console.log("Editando contato com ID:", idContato);
+// Função para editar os dados do contato
+function editarContato(idCliente, idContato) {
+    console.log("Cliente: " + idCliente  + "Contato: " + idContato);
 
+    document.getElementById('form-contato-id-edit').value = idContato;
+    document.getElementById('form-cliente-modal-contato-editar').style.display = 'block';
+
+    const botaoSalvar = document.getElementById('modal-content-contato-editar');
+
+    // Verifica se o botão de salvar já foi adicionado
+    if (!botaoSalvarAdicionado) {
+        const btnSalvar = document.createElement('button');
+        btnSalvar.classList.add('btn-salvar-contato');
+        btnSalvar.textContent = 'Salvar contato';
+
+        btnSalvar.onclick = function () {
+            salvarEdicaoContato(idCliente, idContato);
+        };
+
+        botaoSalvar.appendChild(btnSalvar);
+        botaoSalvarAdicionado = true; // Marca que o botão foi adicionado
+    }
+    
+}
+
+// Função para salvar a edição do nome do contato
+function salvarEdicaoContato(idCliente, idContato) {
+    console.log("salvar antes: Cliente: " + idCliente  + "Contato: " + idContato);
+    const novoNome = document.getElementById('form-contato-nome-edit').value;
+    console.log("salvar depois: Cliente: " + idCliente  + "Contato: " + idContato);
+    const contatoAtualizado = {
+        idContato: idContato,
+        nomeCompleto: novoNome
+    };
+
+    fetch(`${urlAPIClientes}/${idCliente}/contatos/${idContato}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contatoAtualizado)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao salvar edição do contato');
+        }
+        console.log(`Edição do nome do contato ID ${idContato} salva com sucesso`);
+        fecharModalContatoEdicao(); 
+        listarClientes();
+        listarContatosPorCliente(idCliente);
+    })
+    .catch(error => {
+        console.error('Erro ao salvar edição do contato:', error);
+        // Trate o erro conforme necessário (exibir mensagem de erro, etc.)
+        alert('Erro ao salvar edição do contato. Verifique o console para mais detalhes.');
+    });
+}
+
+function fecharModalContatoEdicao() {
+    document.getElementById('form-cliente-modal-contato-editar').style.display = 'none';
 }
 
 function excluirContato(idCliente, idContato) {
@@ -764,21 +828,36 @@ function excluirContato(idCliente, idContato) {
             if (!response.ok) {
                 throw new Error('Erro ao excluir contato');
             }
-            const linha = document.querySelector(`#form-cliente-contatos tr[data-id-contato="${idContato}"]`);
-            if (linha) {
-                linha.remove();
+            // Remover a linha correspondente ao contato excluído
+            const tabelaContatos = document.getElementById('form-cliente-contatos');
+            const linhas = tabelaContatos.getElementsByTagName('tr');
+
+            for (let i = 0; i < linhas.length; i++) {
+                const celulas = linhas[i].getElementsByTagName('td');
+                if (celulas.length > 0 && celulas[0].textContent === idContato.toString()) {
+                    tabelaContatos.deleteRow(i);
+                    break; // Sai do loop após remover a linha correta
+                }
             }
-            alert("Contato excluído com sucesso!");
+            alert("Contato excluído com sucesso!");            
+            listarClientes();
+            removerDetalhesContato(); 
+            //listarContatosPorCliente(idCliente);
+            //abrirModalDetalhesCliente(idCliente);
         })
         .catch(error => {
             console.error('Erro:', error);
             alert('Erro ao excluir contato');
-            fecharModalContato();
-            listarClientes();
-            listarContatosPorCliente(idCliente);
         });
     }
 }
+
+// Função para remover os detalhes do contato da modal
+function removerDetalhesContato() {
+    document.getElementById('form-contato-id-edit').value = '';
+    document.getElementById('form-contato-nome-edit').value = '';
+}
+
 
 function gerarRelatorio() {
     // Verifica se há clientes na lista antes de gerar o relatório
