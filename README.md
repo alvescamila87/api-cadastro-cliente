@@ -8,7 +8,7 @@ Gera relatório em PDF que mosta os Clientes e Contatos associados aquele.
 ![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/944eb213-894d-491b-acf7-4b2a961fb133)
 
 ## DER
-![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/c5b62580-4098-4d9b-9918-2d75500926b0)
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/a0ad7b57-1912-458f-9307-ae296cf71885)
 
 ## Kanban
 ![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/7e107d45-88e8-4782-a7e7-eecca76933dd)
@@ -93,7 +93,22 @@ Ela foi disponibilizada em:
 ```json
 resources > documentation > collection
 ```
-![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/02c37d85-7697-4b8e-aace-25e3b05e5afe)
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/236f4243-0a7c-4066-b761-11593a0e1581)
+
+
+## Documentação
+A documentação foi disponibilizada para facilitar a interação do usuário.
+**JavaDoc**
+
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/b9602805-2771-4c76-a3be-966de61c6c8f)
+
+**DER**
+
+![image](https://github.com/alvescamila87/api-cadastro-cliente/assets/116912821/ecd0cbb7-fbcd-40b3-b6b3-c719b236cb38)
+
+**Swagger OpenAPI**
+
+**Collection Postman**
 
 ## Autor
 * Camila Alves
