@@ -461,12 +461,7 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${email.idEmail}</td>
-                        <td>${email.email}</td>
-                        <td>
-                            <button class="btn-novo-email" onclick="adicionarNovoEmailCliente(${email.idEmail})">Novo</button>
-                            <button class="btn-editar-email" onclick="editarEmailCliente(${idCliente}, ${email.idEmail})">Editar</button>
-                            <button class="btn-excluir-email" onclick="excluirEmailCliente(${email.idEmail})">Excluir</button>
-                        </td>                       
+                        <td>${email.email}</td>                   
                     `;
                     formEmailsList.appendChild(row);
                 }
@@ -484,12 +479,7 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${telefone.idTelefone}</td>
-                        <td>${telefone.telefone}</td> 
-                        <td>
-                            <button class="btn-novo-telefone" onclick="adicionarNovoTelefoneCliente(${telefone.idTelefone})">Novo</button>
-                            <button class="btn-editar-telefone" onclick="editarTelefoneCliente(${telefone.idTelefone})">Editar</button>
-                            <button class="btn-excluir-telefone" onclick="excluirTelefoneCliente(${telefone.idTelefone})">Excluir</button>
-                        </td>                      
+                        <td>${telefone.telefone}</td>                  
                     `;
                     formTelefonesList.appendChild(row);
                 }
@@ -597,20 +587,31 @@ function salvarContato(cliente) {
 
     // Coletar dados do formulário
     const nomeContato = document.getElementById('nome-contato').value.trim();
-    const emailContato = document.getElementById('email-contato').value.trim();
-    const telefoneContato = document.getElementById('telefone-contato').value.trim();
+    const emailInputs = document.querySelectorAll('.emailInputContato');
+    const telefoneInputs = document.querySelectorAll('.telefoneInputContato');
 
-    // Validar se todos os campos obrigatórios estão preenchidos
-    if (!nomeContato || !emailContato || !telefoneContato) {
-        alert("Todos os campos são obrigatórios e devem ser preenchidos.");
+    const emailsArray = Array.from(emailInputs).map(emailInput => emailInput.value.trim());
+    if (emailsArray.some(email => email === '')) {
+        alert("Favor preencher todos os campos de e-mail.");
+        return;
+    }
+
+    const telefonesArray = Array.from(telefoneInputs).map(telefoneInput => telefoneInput.value.trim());
+    if (telefonesArray.some(telefone => telefone === '')) {
+        alert("Favor preencher todos os campos de telefone.");
+        return;
+    }
+
+    if (!nomeContato || emailsArray.length === 0 || telefonesArray.length === 0) {
+        alert("Todos os campos são obrigatórios e devem conter valores válidos.");
         return;
     }
 
     // Construir objeto do novo contato
     const novoContato = {
         nomeCompleto: nomeContato,
-        emails: [{ email: emailContato }],
-        telefones: [{ telefone: telefoneContato }]
+        emails: emailsArray.map(email => ({ email: email })),
+        telefones: telefonesArray.map(telefone => ({ telefone: telefone }))
     };
 
     // Enviar solicitação POST para a API
@@ -655,11 +656,56 @@ function abrirModalContato(cliente) {
 
     // Limpar os campos do formulário de adicionar contato
     document.getElementById('nome-contato').value = '';
-    document.getElementById('email-contato').value = '';
-    document.getElementById('telefone-contato').value = '';
+
+     // Limpar campos de e-mail
+     const divEmailsContato = document.getElementById('divEmailsContato');
+     divEmailsContato.innerHTML = `
+         <label for="email_contato-add">E-mail:</label>
+         <input type="email" class="emailInputContato" name="email_contato-add" placeholder="nome@email.com" required>
+         <button type="button" onclick="adicionarCampoEmailContato()">Adicionar campo de e-mail</button>
+     `;
+ 
+     // Limpar campos de telefone
+     const divTelefonesContato = document.getElementById('divTelefonesContato');
+     divTelefonesContato.innerHTML = `
+         <label for="telefone_contato-add">Telefone:</label>
+         <input type="tel" class="telefoneInputContato" name="telefone_contato-add" placeholder="(00) 0000-0000" required>
+         <button type="button" onclick="adicionarCampoTelefoneContato()">Adicionar campo de telefone</button>
+     `;
 
     console.log("DEPOIS - Chamou abrirModalContato para o cliente ID:", cliente);
 }
+
+function adicionarCampoEmailContato() {
+    const divEmailsContato = document.getElementById('divEmailsContato');
+    const novoCampoEmail = document.createElement('div');
+    novoCampoEmail.innerHTML = `
+        <input type="email" class="emailInputContato" name="email_contato-add" placeholder="nome@email.com" required>
+        <button type="button" onclick="removerCampoEmailContato(this)">Remover</button>
+    `;
+    divEmailsContato.insertBefore(novoCampoEmail, divEmailsContato.lastElementChild);
+}
+
+function adicionarCampoTelefoneContato() {
+    const divTelefonesContato = document.getElementById('divTelefonesContato');
+    const novoCampoTelefone = document.createElement('div');
+    novoCampoTelefone.innerHTML = `
+        <input type="tel" class="telefoneInputContato" name="telefone_contato-add" placeholder="(00) 0000-0000" required>
+        <button type="button" onclick="removerCampoTelefoneContato(this)">Remover</button>
+    `;
+    divTelefonesContato.insertBefore(novoCampoTelefone, divTelefonesContato.lastElementChild);
+}
+
+function removerCampoEmailContato(button) {
+    const campoParaRemover = button.parentNode;
+    campoParaRemover.remove();
+}
+
+function removerCampoTelefoneContato(button) {
+    const campoParaRemover = button.parentNode;
+    campoParaRemover.remove();
+}
+
 
 /** Adicionar os contatos à lista de detalhes de cliente */
 function adicionarContatoNaTabela(idCliente, contato) {
@@ -723,7 +769,11 @@ function detalhesContato(idCliente, idContato) {
     console.log("Cliente: " + idCliente +" Contato: " + idContato); 
 
     const modalDetalhesContato = document.getElementById('form-cliente-modal-contato-detalhes');    
-    
+
+     // Limpar tabelas antes de preencher novos dados
+     document.getElementById('detalhes-emails-contato').innerHTML = '';
+     document.getElementById('detalhes-telefones-contato').innerHTML = '';
+        
     // Fazer requisição para obter os detalhes do contato
     fetch(`${urlAPIClientes}/${idCliente}/contatos/${idContato}`)
         .then(response => {
@@ -733,11 +783,28 @@ function detalhesContato(idCliente, idContato) {
             return response.json();
         })
         .then(data => {
+            console.log('Dados do contato recebidos:', data);
+
+
             // Preencher os dados na modal
             document.getElementById('detalhes-id-contato').textContent = data.idContato;
             document.getElementById('detalhes-nome-contato').textContent = data.nomeCompleto;
-            document.getElementById('detalhes-email-contato').textContent = data.email;
-            document.getElementById('detalhes-telefone-contato').textContent = data.telefone;
+
+            // Preencher os e-mails do contato
+            const tabelaEmails = document.getElementById('detalhes-emails-contato');
+            data.emails.forEach(email => {
+                const linha = tabelaEmails.insertRow();
+                const celulaEmail = linha.insertCell();
+                celulaEmail.textContent = email.email;
+            });
+
+            // Preencher os telefones do contato
+            const tabelaTelefones = document.getElementById('detalhes-telefones-contato');
+            data.telefones.forEach(telefone => {
+                const linha = tabelaTelefones.insertRow();
+                const celulaTelefone = linha.insertCell();
+                celulaTelefone.textContent = telefone.telefone;
+            });
 
             // Exibir a modal
             modalDetalhesContato.style.display = "block";
