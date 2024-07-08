@@ -461,12 +461,7 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${email.idEmail}</td>
-                        <td>${email.email}</td>
-                        <td>
-                            <button class="btn-novo-email" onclick="adicionarNovoEmailCliente(${email.idEmail})">Novo</button>
-                            <button class="btn-editar-email" onclick="editarEmailCliente(${idCliente}, ${email.idEmail})">Editar</button>
-                            <button class="btn-excluir-email" onclick="excluirEmailCliente(${email.idEmail})">Excluir</button>
-                        </td>                       
+                        <td>${email.email}</td>                   
                     `;
                     formEmailsList.appendChild(row);
                 }
@@ -484,12 +479,7 @@ function abrirModalDetalhesCliente(idCliente) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${telefone.idTelefone}</td>
-                        <td>${telefone.telefone}</td> 
-                        <td>
-                            <button class="btn-novo-telefone" onclick="adicionarNovoTelefoneCliente(${telefone.idTelefone})">Novo</button>
-                            <button class="btn-editar-telefone" onclick="editarTelefoneCliente(${telefone.idTelefone})">Editar</button>
-                            <button class="btn-excluir-telefone" onclick="excluirTelefoneCliente(${telefone.idTelefone})">Excluir</button>
-                        </td>                      
+                        <td>${telefone.telefone}</td>                  
                     `;
                     formTelefonesList.appendChild(row);
                 }
@@ -793,6 +783,9 @@ function detalhesContato(idCliente, idContato) {
             return response.json();
         })
         .then(data => {
+            console.log('Dados do contato recebidos:', data);
+
+
             // Preencher os dados na modal
             document.getElementById('detalhes-id-contato').textContent = data.idContato;
             document.getElementById('detalhes-nome-contato').textContent = data.nomeCompleto;
