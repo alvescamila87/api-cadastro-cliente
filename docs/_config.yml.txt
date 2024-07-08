@@ -1,0 +1,8 @@
+# docs/_config.yml
+
+title: "Sistema de Cadastro de Cliente e Contato"
+description: "API Rest de Cadastro de Cliente e Contato"
+baseurl: "/docs"
+url: "https://alvescamila87.github.io"
+source: .
+destination: ./_site

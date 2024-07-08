@@ -8,6 +8,14 @@ import java.util.Objects;
 
 /**
  * Representa um endereço de e-mail associado a um cliente ou contato.
+ *
+ *  @author Camila
+ *
+ *  @see Cliente
+ *  @see Contato
+ *  @see Telefone
+ *
+ *  @since V1
  */
 @Entity
 @Table(name = "emails")

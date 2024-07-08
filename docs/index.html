@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Customer system</title>
+</head>
+<body>
+    <header>
+        <h1>Customers HUB</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="showSection('form-cliente-list'); listarClientes();">Lista de clientes</a>        
+        <a href="#" onclick="showSection('form-cliente-add')">Adicionar cliente</a>
+        <a href="#" onclick="showSection('form-relatorio')">Gerar gelatório</a>
+    </nav>
+    
+    <!-- Seção adicionar cliente -->
+    <section id="form-cliente-add" class="section-group">
+        <h3>Cadastrar cliente</h3>
+        <form>
+            <label for="nome_cliente">Nome completo</label>
+            <input type="text" id="nome_cliente" name="nome_cliente" required><br><br>        
+        
+            <div class="form-group" id="divEmails">
+                <label for="email_cliente">E-mail:</label>
+                <input type="email" class="emailInput" name="email_cliente" placeholder="nome@email.com" required>
+                <button type="button" onclick="adicionarCampoEmail()">Adicionar campo de e-mail</button>
+            </div>
+            <div class="form-group" id="divTelefones">
+                <label for="telefone_cliente">Telefone:</label>
+                <input type="tel" class="telefoneInput" name="telefone_cliente" placeholder="(00) XXXXX-XXXX" required>
+                <button type="button" onclick="adicionarCampoTelefone()">Adicionar campo de telefone</button>
+            </div>            
+
+            <button type="button" onclick="adicionarCliente()">Salvar</button>
+            <button type="button" onclick="limparFormulario()">Limpar</button>
+        </form>
+    </section>
+
+    <!-- Seção listar cliente -->
+    <section id="form-cliente-list"  class="section-group">
+        <!-- Seção pesquisar cliente por ID -->
+        <h3>Pesquisar cliente por ID</h3>
+        <form >
+           <input type="text" id="id_cliente" name="id_cliente" placeholder="Digite o ID do cliente"><br><br>
+           <button type="button" onclick="pesquisarCliente()">Pesquisar</button>
+           <button type="button" onclick="limparPesquisaCliente()">Limpar pesquisa</button>
+        </form>
+        <h3>Lista de Clientes</h3>
+        <table >
+            <thead>
+               <tr>
+                   <th>ID</th>
+                   <th>Criado em</th>
+                   <th>Nome completo</th>
+                   <th>Ações</th>
+               </tr>
+            </thead>
+            <tbody id="form-cliente-list-tuples">
+               <!-- Clientes serão listados aqui -->
+            </tbody>
+        </table>
+    </section>  
+
+   <!-- Seção detalhes cliente por ID -->
+    <section id="form-cliente-modal-detalhes" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalDetalhes()">&times;</span>
+            <div id="modal-content-cliente" class="cliente-info">
+                <h4>Informações do Cliente</h4>
+                <p><strong>ID Cliente:</strong> <span id="form-cliente-id"></span></p>
+                <p><strong>Criado em:</strong> <span id="form-cliente-criado-em"></span></p>
+                <p><strong>Nome completo:</strong> <span id="form-cliente-nome"></span></p>                
+            </div>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>E-mails do cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-emails">
+                    <!-- E-mails do cliente serão listados aqui -->
+                </tbody>
+            </table>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Telefones do cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-telefones">
+                    <!-- Telefones do cliente serão listados aqui -->
+                </tbody>
+            </table>
+            <table class="cliente-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Contatos do cliente</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="form-cliente-contatos">
+                    <!-- Contatos do cliente serão listados aqui -->
+                </tbody>
+            </table>
+          </div>
+    </section>
+
+    <!-- Seção edição cliente por ID -->
+    <section id="form-cliente-modal-edicao" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalEdicao()">&times;</span>
+            <h3>Editar Cliente</h3>
+            <form>
+                <input type="hidden" id="form-cliente-id-edit">
+                <label for="form-cliente-nome-edit">Novo nome completo:</label>
+                <input type="text" id="form-cliente-nome-edit">
+                <button type="button" onclick="salvarEdicaoCliente()">Salvar</button>
+            </form>        
+        </div>
+    </section>
+    
+    <!-- Seção adicionar contato associado ao cliente -->
+    <section id="form-cliente-modal-contato" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalContato()">&times;</span>
+            <div id="modal-content-cliente-contato" class="cliente-info-contato">
+                <p><strong>ID Cliente associado:</strong> <span id="form-cliente-id-contato" data-cliente-id=""></span></p>
+            </div>
+            <div id="modal-content-contato" class="contato-info">
+                <h4>Cadastrar contato</h4>
+                <form >
+                    <label for="nome-contato">Nome completo:</label>
+                    <input type="text" name="nome-contato" id="nome-contato" placeholder="Informe o nome completo do contato" required><br><br>
+
+                    <label for="email-contato">E-mail:</label>
+                    <input type="text" name="email-contato" id="email-contato" placeholder="nome@email.com" required><br><br>
+
+                    <label for="telefone-contato">Telefone:</label>
+                    <input type="text" name="telefone-contato" id="telefone-contato" placeholder="(00) 0000-00000" required><br><br>
+                    <button type="button" onclick="salvarContato()">Salvar contato</button>
+                </form>
+            </div>            
+          </div>
+    </section>
+
+    <!-- Seção detalhes do contato associado ao cliente -->
+    <section id="form-cliente-modal-contato-detalhes" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalContatoDetalhes()">&times;</span>
+            <div id="modal-content-contato-detalhes" class="contato-info-detalhes">
+                <h4>Detalhes do contato</h4>
+                <p><strong>ID Contato:</strong> <span id="detalhes-id-contato"></span></p>
+                <p><strong>Nome completo:</strong> <span id="detalhes-nome-contato"></span></p>
+                <p><strong>E-mail:</strong> <span id="detalhes-email-contato"></span></p>
+                <p><strong>Telefone:</strong> <span id="detalhes-telefone-contato"></span></p>
+            </div>            
+          </div>
+    </section>
+
+    <!-- Seção editar dados do contato associado ao cliente -->
+    <section id="form-cliente-modal-contato-editar" class="section-group-modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalContatoEdicao()">&times;</span>
+            <div id="modal-content-contato-editar" class="contato-info-editar">
+                <h4>Detalhes do contato</h4>
+                <input type="hidden" id="form-contato-id-edit">
+                <label for="form-contato-nome-edit">Novo nome completo:</label>
+                <input type="text" id="form-contato-nome-edit">
+            </div>            
+          </div>
+    </section>
+
+    <!-- Seção relatório cliente e contato -->
+    <section id="form-relatorio"  class="section-group">
+        <h3>Relatório de clientes</h3>
+        <form>
+            <button type="button" onclick="gerarRelatorio()">Gerar Relatório</button>
+        </form>
+    </section>              
+
+    <footer>
+        <p>Designed by Camila Alves - 2024 &copy; Todos os direitos reservados.</p>
+    </footer>  
+</body>
+<script src="js/script.js"></script>
+</html>

@@ -8,6 +8,13 @@ import java.util.Objects;
 
 /**
  * Representa um número de telefone associado a um cliente ou contato.
+ *  @author Camila
+ *
+ *  @see Cliente
+ *  @see Email
+ *  @see Telefone
+ *
+ *  @since V1
  */
 @Entity
 @Table(name = "telefones")

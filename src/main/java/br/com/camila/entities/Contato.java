@@ -12,6 +12,14 @@ import java.util.Objects;
 /**
  * Representa um contato associado a um cliente no sistema.
  * Cada contato pode ter múltiplos e-mails e telefones associados.
+ *
+ * @author Camila
+ *
+ * @see Cliente
+ * @see Email
+ * @see Telefone
+ *
+ * @since V1
  */
 @Entity
 @Table(name = "contatos")

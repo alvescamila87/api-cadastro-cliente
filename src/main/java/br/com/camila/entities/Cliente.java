@@ -11,6 +11,14 @@ import java.util.List;
 /**
  * Representa um cliente cadastrado no sistema.
  * Cada cliente pode ter múltiplos contatos, e-mails e telefones associados.
+ *
+ * @author Camila
+ *
+ * @see Contato
+ * @see Email
+ * @see Telefone
+ *
+ * @since V1
  */
 @Entity
 @Table(name = "clientes")
